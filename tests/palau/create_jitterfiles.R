@@ -2,7 +2,7 @@
 
 library(FLR4MFCL)
 library(tools)  # file_path_sans_ext
-source("../../function/yft_2023_assessment/jitter.R")
+source("../../function/yft_2023/jitter.R")
 
 # Origin and destination
 model <- "alb_1_region"
