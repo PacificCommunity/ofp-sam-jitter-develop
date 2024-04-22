@@ -5,7 +5,7 @@ library(tools)  # file_path_sans_ext
 source("../../function/03_yft_2023_assessment/jitter.R")
 
 # Origin and destination
-model <- "alb_1_region"
+model <- "01_alb_1_region_2023"
 jitter.dir <- file.path("../../parfiles", model)
 sigma <- 0.100
 njitter <- 20

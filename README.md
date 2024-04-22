@@ -12,7 +12,7 @@ YFT 2023 assessment and a 09.par file from a single-region ALB model, provided
 by John:
 
 - [jitter.R](function/03_yft_2023_assessment/jitter.R)
-- [09.par](parfiles/alb_1_region/09.par)
+- [09.par](parfiles/01_alb_1_region_2023/09.par)
 
 The result from the test script,
 
