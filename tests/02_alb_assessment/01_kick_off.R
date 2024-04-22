@@ -19,7 +19,7 @@ cat("done\n\n")
 test <- jitter(par, 0.1, 1)
 
 # Write jittered par files into local dir
-suffix <- formatC(seq_len(njitter), width=nchar(njitter), flag="0")
+suffix <- formatC(seq_len(njitter), width=max(nchar(njitter), 2), flag="0")
 suffix <- paste0("_", suffix, ".par")
 for(i in 1:njitter)
 {
