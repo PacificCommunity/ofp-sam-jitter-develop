@@ -29,7 +29,7 @@
 
 setGeneric("jitter",function(par,sd,seed) standardGeneric("jitter"))
 setMethod("jitter", signature(par="MFCLPar",sd="numeric",seed="numeric"),function(par,sd,seed) {
-  
+
  # seed=666;par=par7a; sd=0.1
   set.seed(seed)
   nFish=dimensions(par)["fisheries"]
@@ -38,7 +38,7 @@ setMethod("jitter", signature(par="MFCLPar",sd="numeric",seed="numeric"),functio
   nYears=dimensions(par)["years"]
   nAgeYr=nAge/nSeasons
   nReg=dim(region_pars(par))[2]
-  
+
   ## tag fish rep
   if (flagval(par,2,198)$value==1){
     nRRpars=max(tag_fish_rep_grp(par))
@@ -48,36 +48,36 @@ setMethod("jitter", signature(par="MFCLPar",sd="numeric",seed="numeric"),functio
     {
       orig.rep.rate = tag_fish_rep_rate(par)
       idx.fixed = which(tag_fish_rep_flags(par)==0)
-      
+
       x=runif(nRRpars,0,maxRR)
       matcher=match(tag_fish_rep_grp(par),1:nRRpars)
       tag_fish_rep_rate(par) <- matrix(x[matcher],dim(tag_fish_rep_grp(par)))
       tag_fish_rep_rate(par)[idx.fixed] = orig.rep.rate[idx.fixed]
-      
+
     } else {
       x=runif(nRRpars,0,maxRR)
       matcher=match(tag_fish_rep_grp(par),1:nRRpars)
       tag_fish_rep_rate(par) <- matrix(x[matcher],dim(tag_fish_rep_grp(par)))
     }
-    
+
   }
-  
+
   ## percent maturity
   if (flagval(par,2,188)$value>0){ #If converting maturity at length to age using a spline
     mat(par) <- mat(par)*rnorm(length(mat(par)),1,sd)
     mat(par) <- mat(par)/max(mat(par))
   }
-  
+
   ## total population scaling parameter
   if (flagval(par,2,31)$value==1){  #If totpop is estimated
     tot_pop(par) <- tot_pop(par)+rnorm(1,0,sd)
   }
-  
+
   ## Recruitment deviates
   if (flagval(par,2,30)$value==1){
     rel_rec(par) <- rel_rec(par)*rnorm(length(rel_rec(par)),1,sd)
   }
-  
+
   ## fishery selectivity
   uniqueSels=max(flagval(par,-1:-nFish,24)$value)
   for (i in 1:uniqueSels){         #loop over fisheries
@@ -95,9 +95,9 @@ setMethod("jitter", signature(par="MFCLPar",sd="numeric",seed="numeric"),functio
       fishery_sel(par)[,,Selsfish] <- aperm(array(NewSel,c(nSeasons,nAgeYr,1,length(Selsfish),1,1)),c(2,3,4,1,5,6))
     }
   }
-  
+
   ## natural mortality
-  
+
   ## average catchability coefficients
   if (any(flagval(par,-1:-nFish,1)$value==1)){
     for (i in 1:max(flagval(par,-1:-nFish,60)$value)){
@@ -105,8 +105,8 @@ setMethod("jitter", signature(par="MFCLPar",sd="numeric",seed="numeric"),functio
       av_q_coffs(par)[,,matcher,,,] <- av_q_coffs(par)[,,matcher,,,]*rnorm(1,1,sd)
     }
   }
-  
-  
+
+
   ## movement parameters
   if (flagval(par,2,68)$value==1){
     diff_coffs(par) <- diff_coffs(par)*rnorm(length(diff_coffs(par)),1,sd)
@@ -116,12 +116,12 @@ setMethod("jitter", signature(par="MFCLPar",sd="numeric",seed="numeric"),functio
     if (any(diff_coffs(par)>3))
       diff_coffs(par)[diff_coffs(par)>3]=2.9999999
   }
-  
+
   ## xmovement coefficients
   if (flagval(par,2,184)$value==1){
     xdiff_coffs(par) <- xdiff_coffs(par)*rnorm(length(xdiff_coffs(par)),1,sd)
   }
-  
+
   ## regional recruitment distribution
   if(sum(subset(flags(par),flagtype==-100000)$value>0) >0){
     # identify 'free' regions
@@ -131,12 +131,12 @@ setMethod("jitter", signature(par="MFCLPar",sd="numeric",seed="numeric"),functio
     rand.dist = (rand.dist/sum(rand.dist))*must.sum # normalize and make sum to orginial proportion
     region_pars(par)[1,idx.free] = rand.dist
   }
-  
+
   ## regional recruitment variation
  # if (flagval(par,2,71)$value==1){
  #   region_rec_var(par)[] <- 0
  # }
-  
+
   ## Effort Devs
  # if (flagval(par,2,34)$value==1){
  #   for (i in 1:nFish){
@@ -147,21 +147,21 @@ setMethod("jitter", signature(par="MFCLPar",sd="numeric",seed="numeric"),functio
  #     }
  #   }
  # }
-  
+
   ## extra fishery paramters
-  
+
   for (i in 1:nFish){
     ## 1 and 2 seasonal catchability
     if (flagval(par,-i,27)$value==1){
       fish_params(par)[1:2,i]=fish_params(par)[1:2,i]*rnorm(2,1,sd)
     }
-    
+
   }
-  
+
   ## 4 variance for tag negative binomial
   if (any(flagval(par,-1:-nFish,43)$value==1)){
     nVars=max(flagval(par,-1:-nFish,44)$value)
-    
+
     for (i in 1:nVars){
       matcher=flagval(par,-1:-nFish,44)$value==i
       if (all(flagval(par,-1:-nFish,43)$value[matcher]==1)){
@@ -169,52 +169,52 @@ setMethod("jitter", signature(par="MFCLPar",sd="numeric",seed="numeric"),functio
       }
     }
   }
-  
+
   ## Age Pars
   ## 2 M deviations
-  
+
   ## 3 deviations from von Bertalanffy curve
   if (flagval(par,1,173)$value>1 & flagval(par,1,184)$value>0){
     growth_devs_age(par) <- growth_devs_age(par)*rnorm(nAge,1,sd)
   }
-  
+
   ## 4 growth curve deviates ??? unused?
   ## 5 log natural mortality
-  
+
   ## Region Pars
   if (any(flagval(par,-100000,1:nReg)$value==1)) {
     estRegs=flagval(par,-100000,1:nReg)$value==1
     region_pars(par)[1,estRegs]=region_pars(par)[1,estRegs]*rnorm(length(region_pars(par)[1,estRegs]),1,sd)
   }
-  
+
   ## time varying catchability ???
 
-  
-  
-  
+
+
+
   ## Growth Parameters
   ## L1
   if (flagval(par,1,12)$value==1){
     growth(par)[1] <- growth(par)[1]*rnorm(1,1,sd)
   }
-  
+
   ## L2
   if (flagval(par,1,13)$value==1){
     growth(par)[2] <- growth(par)[2]*rnorm(1,1,sd)
   }
-  
+
   ## k
   if (flagval(par,1,14)$value==1){
     growth(par)[3] <- growth(par)[3]*rnorm(1,1,sd)
   }
-  
+
   ## Richards
   if (flagval(par,1,227)$value==1){
     richards(par) <- richards(par)+rnorm(1,0,sd)
   }
-  
+
   ## Seasonal growth parameters
-  
+
   ## Variance parameters
   if (flagval(par,1,15)$value==1){
     growth_var_pars(par)[1]=growth_var_pars(par)[1]*rnorm(1,1,sd)
@@ -228,7 +228,7 @@ setMethod("jitter", signature(par="MFCLPar",sd="numeric",seed="numeric"),functio
       growth_var_pars(par)[2]=growth_var_pars(par)[2]*rnorm(1,1,sd)
     }
   }
-  
+
   ## new orthogonal coefficients
   if (flagval(par,1,155)$value>0){
   rec_orthogonal(par)[] <-   rec_orthogonal(par) * rnorm(prod(dim(rec_orthogonal(par))),1,sd)
@@ -248,6 +248,6 @@ setMethod("jitter", signature(par="MFCLPar",sd="numeric",seed="numeric"),functio
       }
     }
   }
-  
+
   return(par)
 })
