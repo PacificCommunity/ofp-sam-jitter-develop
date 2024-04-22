@@ -27,8 +27,8 @@
 #'
 #' @rdname par-methods
 
-setGeneric('jitter',function(par,sd,seed) standardGeneric('jitter'))
-setMethod("jitter", signature(par='MFCLPar',sd='numeric',seed='numeric'),function(par,sd,seed) {
+setGeneric("jitter",function(par,sd,seed) standardGeneric("jitter"))
+setMethod("jitter", signature(par="MFCLPar",sd="numeric",seed="numeric"),function(par,sd,seed) {
   
  # seed=666;par=par7a; sd=0.1
   set.seed(seed)
