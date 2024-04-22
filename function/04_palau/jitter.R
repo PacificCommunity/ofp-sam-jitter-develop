@@ -184,7 +184,7 @@ setMethod("jitter", signature(par="MFCLPar", sd="numeric", seed="numeric"),
       richards(par) <- richards(par) + rnorm(1,0,sd)
     }
 
-    # Variance parameters
+    # Growth variance parameters
     if(flagval(par,1,15)$value == 1){
       growth_var_pars(par)[1] <- growth_var_pars(par)[1] * rnorm(1,1,sd)
       while(growth_var_pars(par)[1] < growth_var_pars(par)[1,2] ||
