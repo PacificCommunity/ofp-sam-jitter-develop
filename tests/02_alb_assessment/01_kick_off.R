@@ -8,7 +8,7 @@ source("../../function/04_palau/jitter.R")
 model <- "02_alb_2024_final_francis_vboffset"
 jitter.dir <- file.path("../../parfiles", model)
 sigma <- 0.100
-njitter <- 20
+njitter <- 2
 
 # Read par file
 cat("* Reading parfile ... ")
