@@ -148,7 +148,6 @@ setMethod("jitter", signature(par="MFCLPar", sd="numeric", seed="numeric"),
       region_pars(par)[1,estRegs] <- region_pars(par)[1,estRegs] * rnorm(length(region_pars(par)[1,estRegs]),1,sd)
     }
 
-    # Growth parameters
     # L1
     if(flagval(par,1,12)$value == 1){
       growth(par)[1] <- growth(par)[1] * rnorm(1,1,sd)
@@ -169,7 +168,7 @@ setMethod("jitter", signature(par="MFCLPar", sd="numeric", seed="numeric"),
       richards(par) <- richards(par) + rnorm(1,0,sd)
     }
 
-    # Variance parameters
+    # Growth variance parameters
     if(flagval(par,1,15)$value == 1){
       growth_var_pars(par)[1] <- growth_var_pars(par)[1] * rnorm(1,1,sd)
       while(growth_var_pars(par)[1] < growth_var_pars(par)[1,2] | growth_var_pars(par)[1] > growth_var_pars(par)[1,3]){
