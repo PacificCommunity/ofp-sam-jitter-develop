@@ -1,30 +1,32 @@
-
-## Code written by Matthew Vincent, updated by CCJ 2023
+## Code written by Matthew Vincent
 #' jitter
 #'
 #' Function to take a par file and change the values within based on an input SD to allow to perform a jittering analysis for a model in MFCL
-#' This probably only works for a single species model and has not been coded to be usable by the multispecies model
+#' This probably only works for a single species model and has not been coded to be useable by the multispecies model
 #'
 #' This function is still preliminary and in development. Currently things that are not completed including those below
+#' new orthogonal coefficients
 #' extra fisheries pars except for 1,2,4
 #' length based selectivity parameters
 #' selectivity deviates
 #' mean natural mortality and deviates/ functional forms
-#' growth curve deviates ??? different from von Bertalannfy growth deviates which is accounted for
-#' Seasonal growth parameter
+#' growth curve deviates different from von Bertalanffy growth deviates which is accounted for
+#' seasonal growth parameter
 #' age dependent movement coefficients
 #' nonlinear movement coefficients
 #'
-#' Probably others that I didn't notice or don't have any idea about such as the Lagrangian
+#' Probably others that I didn't notice or don't have any idea about, such as the Lagrangian
 #'
 #' @param object: An object of class MFCLPar
 #'
 #' @return An object of class MFCLPar
 #'
-#'
 #' @export
+#'
 #' @docType methods
+#'
 #' @rdname par-methods
+
 setGeneric('jitter',function(par,sd,seed) standardGeneric('jitter'))
 setMethod("jitter", signature(par='MFCLPar',sd='numeric',seed='numeric'),function(par,sd,seed) {
   
