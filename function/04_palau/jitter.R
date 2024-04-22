@@ -110,7 +110,7 @@ setMethod("jitter", signature(par="MFCLPar", sd="numeric", seed="numeric"),
     # Movement parameters
     if(flagval(par,2,68)$value == 1){
       diff_coffs(par) <- diff_coffs(par) * rnorm(length(diff_coffs(par)),1,sd)
-      # Make sure all parameters are greater than 0 and less than 3
+      # make sure all parameters are greater than 0 and less than 3
       diff_coffs(par)[diff_coffs(par) <= 0] <- 1e-16
       diff_coffs(par)[diff_coffs(par) >= 3] <- 2.9999999
     }
@@ -157,7 +157,7 @@ setMethod("jitter", signature(par="MFCLPar", sd="numeric", seed="numeric"),
       growth_devs_age(par) <- growth_devs_age(par) * rnorm(nAge,1,sd)
     }
 
-    # Region pars
+    # Region parameters
     if(any(flagval(par,-100000,1:nReg)$value == 1)){
       estRegs <- flagval(par,-100000,1:nReg)$value == 1
       region_pars(par)[1,estRegs] <- region_pars(par)[1,estRegs] *
