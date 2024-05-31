@@ -35,3 +35,6 @@ for(i in 1:njitter)
 
 # Copy input files into results dir
 file.copy(finalPar(jitter.dir), outdir, overwrite=TRUE)
+
+# write out the regurgitated version of the original par file
+write(par, file.path(outdir, "regurgitated_original.par"))
