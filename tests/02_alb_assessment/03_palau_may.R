@@ -1,3 +1,5 @@
+this.test <- "03_palau_may.R"
+
 ## Jitter preparation
 
 library(FLR4MFCL)
@@ -21,7 +23,7 @@ test <- jitter(par, 0.1, 1)
 # Write jittered par files into results dir
 suffix <- formatC(seq_len(njitter), width=max(nchar(njitter), 2), flag="0")
 suffix <- paste0("_", suffix, ".par")
-outdir <- file.path("../../results", paste0(model, "_03_palau_may"))
+outdir <- file.path("../../results", paste0(model, "_", this.test))
 dir.create(outdir, showWarnings=FALSE)
 for(i in 1:njitter)
 {
