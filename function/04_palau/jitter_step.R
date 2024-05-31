@@ -27,9 +27,16 @@
 #'
 #' @rdname par-methods
 
-setGeneric("jitter", function(par,sd,seed) standardGeneric("jitter"))
-setMethod("jitter", signature(par="MFCLPar", sd="numeric", seed="numeric"),
-  function(par, sd, seed){
+#setGeneric("jitter", function(par,sd,seed) standardGeneric("jitter"))
+#setMethod("jitter", signature(par="MFCLPar", sd="numeric", seed="numeric"),
+
+library(FLR4MFCL)
+parfile <- "../../parfiles/03_TB-3_MSE_LW_Francis/07.par"
+par <- read.MFCLPar(parfile)
+sd <- 0.1
+seed <- 1
+
+  jitter <- function(par, sd, seed){
 
     set.seed(seed)
     nFish <- dimensions(par)["fisheries"]
@@ -213,4 +220,4 @@ setMethod("jitter", signature(par="MFCLPar", sd="numeric", seed="numeric"),
 
     par
   }
-)
+# )
