@@ -1,4 +1,4 @@
-this.test <- "04_claudio_may.R"
+this.test <- "04_claudio_may"
 
 ## Jitter preparation
 
