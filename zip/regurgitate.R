@@ -1,7 +1,10 @@
-library(FLR4MFCL)  # 'spa_2024_hacks' branch
+remotes::install_github("PacificCommunity/ofp-sam-flr4mfcl@master")
+remotes::install_github("PacificCommunity/ofp-sam-flr4mfcl@spa_2024_hacks")
+
+library(FLR4MFCL)
 
 # Download zipfile
-zipfile <- paste0(folder, ".zip")
+zipfile <- "TB-3_MSE_LW_Francis.zip"
 if(!file.exists(zipfile))
   download.file("https://github.com/PacificCommunity/ofp-sam-jitter-develop/releases/download/TB-3_MSE_LW_Francis/TB-3_MSE_LW_Francis.zip", zipfile)
 
